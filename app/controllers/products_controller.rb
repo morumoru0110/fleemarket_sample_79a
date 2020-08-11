@@ -39,7 +39,7 @@ class ProductsController < ApplicationController
   def show
     @grandchild = Category.find(@product.category_id)
     @child = @grandchild.parent
-    # @parent = @child.parent
+    @parent = @child.parent
     @fav = Fav.new
     @favs = @product.favs.includes(:user)
     @comments = Comment.where(product_id: params[:id])

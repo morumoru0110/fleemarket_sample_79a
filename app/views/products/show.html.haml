@@ -4,8 +4,8 @@
 %nav.bread_crumbs
   %ol
     %li
-      -# - breadcrumb :products_show
-      -# = breadcrumbs separator: " &rsaquo; "
+      - breadcrumb :products_show
+      = breadcrumbs separator: " &rsaquo; "
 
 .main-contents
   .main-contents__show-main
@@ -37,10 +37,10 @@
           %tr
             %th カテゴリー
             %td 
-              -# = @parent.category
+              = @parent.category
               親カテゴリ
               %br
-              -# = @child.category
+              = @child.category
               子カテゴリ
               %br
               = @grandchild.category
