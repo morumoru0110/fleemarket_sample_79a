@@ -1,0 +1,75 @@
+.header
+  = render partial: 'layouts/header'
+%nav.bread_crumbs
+  %ol
+    %li 
+      - breadcrumb :card
+      = breadcrumbs separator: " &rsaquo; "
+.title
+  .title__chapter
+    クレジットカード情報入力
+.main-form
+  .main-form__frame
+    = form_with url: cards_path, method: :post, html: {id: "charge-form", name: "inputForm"} do |f|
+      %span.charge-errors
+      .form-group
+        .label__box
+          = f.label :カード番号
+        = f.text_field :number, maxlength: "16", name: "number", placeholder: "カード番号", type: "text",id: "card_number_form", value: 4242424242424242,class: "form-card__input"
+      .form-group
+        .card-company
+          %ul.card-list
+            %li.icon-visa
+              = image_tag asset_path("visa.png"), size: "30x20"
+            %li.icon-master
+              = image_tag asset_path("master.png"), size: "34x20"
+            %li.icon-saison
+              = image_tag asset_path("saison.png"), size: "30x20"
+            %li.icon-jcb
+              = image_tag asset_path("jcb.png"), size: "32x20"
+            %li.icon-amex
+              = image_tag asset_path("amex.png"), size: "21x20"
+            %li.icon-dinners
+              = image_tag asset_path("diners.png"), size: "32x20"
+            %li.icon-discover
+              = image_tag asset_path("discover.png"), size: "32x20"
+      .form-group
+        .label__box
+          = f.label :有効期限
+        = f.text_field :exp_month, maxlength: "2", name: "exp_month", placeholder: "月", type: "text",id: "exp_month_form", value: 12,class: "form-card__input--month"
+        = f.text_field :exp_year, maxlength: "4", name: "exp_year", placeholder: "年", type: "text",id: "exp_year_form", value: 2022,class: "form-card__input--year"
+      .form-group
+        .label__box
+          = f.label :CVC
+        = f.text_field :CVC, maxlength: "3", name: "cvc", placeholder: "CVC", type: "text",id: "cvc_form", value: 123,class: "form-card__input--cvc"
+      .form-group__addition
+        .form-group__addition__question ?
+        %p.form-group__text
+          カードの裏面の番号とは？
+      - if current_user.card == nil
+        .form-group
+          = f.submit "登録", id: "regist_card",class: "btn" 
+.Footer
+  .contents
+    %ul.contents
+      %li.content
+        %h2.content__head FURIMAについて
+        %ul
+          %li.content= link_to '会社概要','/'
+          %li.content= link_to 'プライバシーポリシー','/'
+          %li.content= link_to 'FURIMA利用規約','/'
+          %li.content= link_to 'ポイントに関する特約','/'
+      %li.content
+        %h2.content__head FURIMAを見る
+        %ul
+          %li.content= link_to 'カテゴリー一覧','/'
+          %li.content= link_to 'ブランド一覧','/'   
+      %li.contect
+        %h2.content__head ヘルプ＆ガイド
+        %ul
+          %li.content= link_to 'FURIMAガイド','/'
+          %li.content= link_to 'FURIMAロゴ利用ガイドライン','/'
+          %li.content= link_to 'お知らせ','/'
+  .Footer_logo
+    = image_tag asset_path("logo-white.png"), size: "150x50"
+  %p.Clogo ©︎FURIMA

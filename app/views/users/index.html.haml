@@ -1,0 +1,120 @@
+.header
+  = render partial: 'layouts/header'
+
+%nav.bread_crumbs
+  %ol
+    %li 
+      - breadcrumb :mypage
+      = breadcrumbs separator: " &rsaquo; "
+
+.main__mypage
+  .main__left
+    %nav.mypage-nav
+      %p マイページ
+      %ul.mypage-lists
+        %li
+          .lists-info
+            = link_to new_product_path do
+              出品する
+          = icon('fas','angle-right')
+        %li
+          .lists-info
+            = link_to selled_users_path do
+              出品した商品
+          = icon('fas','angle-right')
+        %li
+          .lists-info
+            = link_to bought_users_path do
+              購入した商品
+          = icon('fas','angle-right')
+        %li
+          .lists-info
+            = link_to favs_path do
+              お気に入り一覧
+          = icon('fas','angle-right')
+        %li
+          .lists-info
+            = link_to "#" do
+              お問い合わせ
+          = icon('fas','angle-right')
+        %li
+          .lists-info
+            =link_to "#" do
+              お知らせ
+          = icon('fas','angle-right')
+
+
+      %p 設定
+      %ul.setting-lists
+        - if !current_user.card
+          %li.list-setting
+            .list-setting__info
+              =link_to new_card_path do
+                クレジットカード登録
+            = icon('fas','angle-right')
+        - if current_user.card
+          %li.list-setting
+            .list-setting__info
+              =link_to card_path(@user.card.id) do
+                クレジットカード登録削除
+            = icon('fas','angle-right')
+        %li.list-setting
+          .list-setting__info
+            =link_to "ログアウト", destroy_user_session_path, method: :delete
+          = icon('fas','angle-right')
+
+  .main__right
+    %section.user-info
+      .user-info__contents
+        = link_to "#" do
+          %figure
+            %img{:alt => "", :width => "60", :height => "60", :src => "//static.mercdn.net/thumb/members/394621039.jpg?1579745078" }/
+            = current_user.nickname
+            
+    %section.user-todo
+      .tab-todo
+        やることリスト
+      .tab-content
+        %ul.todo-lists
+          %li
+            .list-item
+              〇〇日までに、発送
+            = icon('fas','angle-right')
+          %li
+            .list-item
+              〇〇日までに、発送
+            = icon('fas','angle-right')
+    %section.buy-product
+      %h2.buy-product__head 
+        直近で購入したもの
+      - @buyer.each do |buy| 
+        .tab-content
+          %ul.buy-lists
+            %li
+              .list-item
+                = link_to buy.name, "/products/#{buy.id}"
+              = icon('fas','angle-right')
+.Footer
+  .contents
+    %ul.contents
+      %li.content
+        %h2.content__head FURIMAについて
+        %ul
+          %li.content= link_to '会社概要','/'
+          %li.content= link_to 'プライバシーポリシー','/'
+          %li.content= link_to 'FURIMA利用規約','/'
+          %li.content= link_to 'ポイントに関する特約','/'
+      %li.content
+        %h2.content__head FURIMAを見る
+        %ul
+          %li.content= link_to 'カテゴリー一覧','/'
+          %li.content= link_to 'ブランド一覧','/'   
+      %li.contect
+        %h2.content__head ヘルプ＆ガイド
+        %ul
+          %li.content= link_to 'FURIMAガイド','/'
+          %li.content= link_to 'FURIMAロゴ利用ガイドライン','/'
+          %li.content= link_to 'お知らせ','/'
+  .Footer_logo
+    = image_tag asset_path("logo-white.png"), size: "150x50"
+  %p.Clogo ©︎FURIMA

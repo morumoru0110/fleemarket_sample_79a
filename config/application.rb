@@ -17,3 +17,4 @@ module FleamarketSample79a
     # the framework and any gems in your application.
   end
 end
+

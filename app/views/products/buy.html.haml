@@ -1,0 +1,61 @@
+.buy-header
+  =render partial: 'layouts/header' 
+%nav.bread_crumbs
+  %ol
+    %li 
+      - breadcrumb :products_buy
+      = breadcrumbs separator: " &rsaquo; "
+.main
+  .main__buy-container
+    %h1.buy-head 購入内容の確認
+    .main__buy-container__product-content
+      .main__buy-container__product-content__inner
+        .main__buy-container__product-content__inner__product-box
+          .main__buy-container__product-content__inner__product-box__product-img
+            - @product.images.first(1).each do |image|
+              = image_tag asset_path("#{image.image}"),size: "120x100"
+          .main__buy-container__product-content__inner__product-box__product-detail
+            %p.name
+              = @product.name
+            %p.price 
+    .main__buy-container__pay-content
+      .main__buy-container__pay-content__inner
+        = form_with url: purchase_products_path(@product.id) do |f|
+          %ul.buy-price
+            %li.price-title 支払い金額
+            %li.price-money 
+              = "#{@product.price} ¥"
+          .main__buy-container__pay-content__inner__pay-method
+            %p 支払い方法
+            %p 登録カード
+          .main__buy-container__pay-content__inner__address
+            %p 配送先
+            %p 登録住所
+          .main__buy-container__pay-content__inner__buyBtn
+            = f.submit "カードで支払う"
+
+.Footer
+  .contents
+    %ul.contents
+      %li.content
+        %h2.content__head FURIMAについて
+        %ul
+          %li.content= link_to '会社概要','/'
+          %li.content= link_to 'プライバシーポリシー','/'
+          %li.content= link_to 'FURIMA利用規約','/'
+          %li.content= link_to 'ポイントに関する特約','/'
+      %li.content
+        %h2.content__head FURIMAを見る
+        %ul
+          %li.content= link_to 'カテゴリー一覧','/'
+          %li.content= link_to 'ブランド一覧','/'   
+      %li.contect
+        %h2.content__head ヘルプ＆ガイド
+        %ul
+          %li.content= link_to 'FURIMAガイド','/'
+          %li.content= link_to 'FURIMAロゴ利用ガイドライン','/'
+          %li.content= link_to 'お知らせ','/'
+  .Footer_logo
+    = image_tag asset_path("logo-white.png"), size: "150x50"
+  %p.Clogo ©︎FURIMA
+

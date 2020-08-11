@@ -1,0 +1,139 @@
+.main-header
+  =render partial: 'layouts/header'
+  
+%nav.bread_crumbs
+  %ol
+    %li
+      - breadcrumb :products_show
+      = breadcrumbs separator: " &rsaquo; "
+
+.main-contents
+  .main-contents__show-main
+    .main-contents__show-main__product
+      .main-contents__show-main__product__name
+        = @product.name
+      .main-contents__show-main__product__image
+        %ul1
+          - @product.images.first(1).each do |image|
+            = image_tag asset_path("#{image.image}"),size: "560x350"
+              -if @product.buyer_id.present?
+              .products-sold
+                .products-sold__inner
+                  SOLD
+          %ul
+            - @product.images.first(4).each do |image|
+              = image_tag asset_path("#{image.image}"),size: "140x90"
+      
+      .main-contents__show-main__product__price
+        = "#{@product.price}円"
+        .main-contents__show-main__product__price__detail
+          (税込)
+
+      .main-contents__show-main__product__detail
+        = @product.description
+
+      .main-contents__show-main__product__table
+        %table
+          %tr
+            %th カテゴリー
+            %td 
+              = @parent.category
+              %br
+              = @child.category
+              %br
+              = @grandchild.category
+          %tr
+            %th ブランド
+            %td 
+              = @product.brand
+          %tr
+            %th 商品の状態
+            %td 
+              = @product.condition
+          %tr
+            %th 配送料の負担
+            %td 
+              = @product.shipping_charge
+          %tr
+            %th 発送元の地域
+            %td
+              = @product.shipping_area
+          %tr
+            %th 発送日の目安
+            %td 
+              = @product.shipping_day
+      .main-contents__show-main__product__buyArea
+        - if user_signed_in? && current_user.id == @product.seller_id || @product.buyer_id
+        - elsif user_signed_in?
+          =link_to buy_products_path(@product.id) , class: "buyBtn" do
+            商品を購入する
+      .main-contents__show-main__product__optionArea
+        .main-contents__show-main__product__optionArea__likeBtn
+          =render partial: 'favs/fav'
+        .main-contents__show-main__product__optionArea__editBtn
+          - if user_signed_in? && current_user.id == @product.seller_id
+            = link_to edit_product_path(@product.id),method: :get do
+              商品を編集する
+        .main-contents__show-main__product__optionArea__deleteBtn
+          -if user_signed_in? && current_user.id == @product.seller_id
+            = link_to product_path(@product.id), method: :delete, class: "deleteBtn" do
+              商品を削除する
+        .main-contents__show-main__product__optionArea__optional
+          =link_to '#', class: "optional" do
+            %i.fas.fa-flag
+            不適切な商品の通報
+      .main-contents__show-main__product__comment__like
+        = render partial: 'likes/like', locals: {product: @product}
+
+      .main-contents__show-main__product__comment
+        = render partial: 'comments/create'
+      .main-contents__show-main__product__comments
+        %h1 コメント一覧
+        - if @comments
+          - @comments.each do |comment|
+            %p.name
+              ="#{comment.user.nickname}:"
+            %p.comment
+              = comment.comment
+              - if user_signed_in? && comment.user == current_user
+                = link_to comment_path(comment.id), method: :delete, class: "comment-custom-btn" do
+                  削除
+                = link_to edit_comment_path(comment.id), method: :get, class: "comment-custom-btn" do
+                  編集
+      .main-contents__show-main__product__change-page
+        .main-contents__show-main__product__change-page__back
+          =link_to '#', class:"backBtn" do
+            %i.fas.fa-angle-left
+              前の商品
+        .main-contents__show-main__product__change-page__next
+          =link_to '#', class:"nextBtn" do
+            後ろの商品
+            %i.fas.fa-angle-right
+      .main-contents__show-main__product__relatedItems
+        -# =link_to '#' do
+        -#   メンズをもっと見る
+      
+.Footer
+  .contents
+    %ul.contents
+      %li.content
+        %h2.content__head FURIMAについて
+        %ul
+          %li.content= link_to '会社概要','/'
+          %li.content= link_to 'プライバシーポリシー','/'
+          %li.content= link_to 'FURIMA利用規約','/'
+          %li.content= link_to 'ポイントに関する特約','/'
+      %li.content
+        %h2.content__head FURIMAを見る
+        %ul
+          %li.content= link_to 'カテゴリー一覧','/'
+          %li.content= link_to 'ブランド一覧','/'   
+      %li.contect
+        %h2.content__head ヘルプ＆ガイド
+        %ul
+          %li.content= link_to 'FURIMAガイド','/'
+          %li.content= link_to 'FURIMAロゴ利用ガイドライン','/'
+          %li.content= link_to 'お知らせ','/'
+  .Footer_logo
+    = image_tag asset_path("logo-white.png"), size: "150x50"
+  %p.Clogo ©︎FURIMA

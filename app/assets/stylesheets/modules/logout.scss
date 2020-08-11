@@ -1,0 +1,42 @@
+.contents {
+  box-sizing: border-box;
+  .main-header {
+    width: 100vw;
+    height: 150px;
+  }
+  .container {
+    background-color: whitesmoke;
+    height: calc(100vh - 150px);
+    display: flex;
+    justify-content: center;
+    .content {
+      background-color: white;
+      width: 700px;
+      height: 200px;
+      margin: 40px 100px 0;
+
+      .from-logout-inner {
+        display: flex;
+        align-items: center;
+        background-color: white;
+        width: 500px;
+        height: 100px;
+        margin-left: 200px;
+        text-align: center;
+
+        .logoutBtn {
+          background-color: #3ccace;
+          display: block;
+          color: white;
+          font-size: 20px;
+          width: 280px;
+          height: 70px;
+          padding-top: 10px;
+          margin-top: 80px;
+          text-decoration: none;
+          text-align: center;
+        }
+      }
+    }
+  }
+}

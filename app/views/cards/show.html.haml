@@ -1,0 +1,13 @@
+.header
+  = render partial: 'layouts/header'
+
+%nav.bread_crumbs
+  %ol
+    %li 
+      - breadcrumb :mypage
+      = breadcrumbs separator: " &rsaquo; "
+      
+-if user_signed_in? && current_user.id == @card.user_id
+  .card__deleteBtn--destroy
+    = link_to card_path(@card.id), method: :delete do
+      クレジットカードの登録を削除する

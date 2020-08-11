@@ -1,0 +1,42 @@
+.item-num-0__edit {
+  display: flex;
+  .previews__edit {
+    width: 114px;
+    min-height: 114px;
+    background-color: #ffffff;
+    .input__edit {
+      box-sizing: border-box;
+      width: 100%;
+      min-height: 114px;
+      overflow: hidden;
+      background-color: #f5f5f5;
+      flex-wrap: wrap;
+      border: 1px dashed #ccc;
+      font-size: 14px;
+      font-family: monospace;
+    }
+  }
+}
+.update__edit--box {
+  display: flex;
+  flex-wrap: wrap;
+  .update__edit--message {
+    width: 114px;
+    text-align: center;
+    margin: 10px 0;
+    .update__edit--update {
+      width: 114px;
+      margin: 10px 0;
+      font-weight: bold;
+      color: #3cc9ce;
+      .hidden {
+        display: none;
+      }
+    }
+    .update__edit--delete {
+      margin-top: 20px;
+      font-weight: bold;
+      color: #e91655;
+    }
+  }
+}

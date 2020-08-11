@@ -1,0 +1,172 @@
+=render partial: 'layouts/header'
+%nav.bread_crumbs
+  %ol
+    %li 
+      - breadcrumb :products_search
+      = breadcrumbs separator: " &rsaquo; "
+.MainSearch-Container
+  .Search-side-container
+    .select-wrap
+      %select.selecter-order-bar
+        %option{value: ""} 並び替え
+        %option{value: "1"} 価格の安い順
+        %option{value: "2"} 価格の高い順
+        %option{value: "3"} 出品の新しい順
+        %option{value: "4"} いいね!の多い順
+    
+    .serach-side-dropdown
+      .search-detail
+        %h3.detail-search 詳細検索
+        %label.keywordaddition
+          = icon('fa','plus')
+          %span キーワードを追加する
+        %input.input-default{placeholder: "  例) 値下げ"}
+      .Form-group
+        = icon('fa','list')
+        %span カテゴリーを選択する
+      %select
+        %option{value: ""} すべて
+        %option{value: "1"} レディース
+        %option{value: "2"} メンズ
+        %option{value: "3"} ベビー・キッズ
+        %option{value: "4"} インテリア・住まい・小物
+      .Form-group-searchBrand
+        = icon('fa','tag')
+        %span ブランド名から探す
+        %input.input-default{placeholder: "  例) シャネル"}
+      .Form-size
+        = icon('fa','size')
+        %span サイズを指定する
+        %select
+          %option{value: ""} すべて
+      .form-price-option
+        = icon('fa','coins')
+        %span 価格
+        %select.price__range 
+          %option{value: ""} 選択してください
+        .Price__Max--Min
+          %input{placeholder: "  ￥ Min"}
+          %span ~
+          %input{placeholder: "  ￥ Max"}
+      .Products__Condition--checkboxes
+        = icon('fa','star')
+        %span.product__status--title 商品の状態
+        
+        .Products__Condition
+          .checkbox-default
+            %label
+              %input{ :type=>"checkbox" } すべて
+          .checkbox-default
+            %label
+              %input{ :type=>"checkbox" } 新品未使用
+        .Products__Condition
+          .checkbox-default
+            %label
+              %input{ :type=>"checkbox" } 未使用に近い
+          .checkbox-default
+            %label
+              %input{ :type=>"checkbox" } 目立った汚れなし
+        .Products__Condition
+          .checkbox-default
+            %label
+              %input{ :type=>"checkbox" } やや傷や汚れあり
+          .checkbox-default
+            %label
+              %input{ :type=>"checkbox" } 傷や汚れあり
+        .Products__Condition
+          .checkbox-default
+            %label
+              %input{ :type=>"checkbox" } 全体的に状態が悪い
+      .Shipping__cost
+        .Shipping__cost--head
+          = icon('fa','truck')
+          %span 配送料の負担
+        .Shipping__cost--checkboxes
+          .checkbox-default
+            %label
+              %input{ :type=>"checkbox" } すべて
+          .checkbox-default
+            %label
+              %input{ :type=>"checkbox" } 着払い(購入者負担)
+
+        .Shipping__cost--checkboxes
+          .checkbox-default
+            %label
+            %input{ :type=>"checkbox" }送料込み(出品者負担)
+
+      .Selling__status 
+        = icon('fa','shopping-cart')
+        %span 販売状況
+        .Selling__status--checkboxes
+          .checkbox-dafault
+            %label
+              %input{ :type=>"checkbox" } すべて
+          .checkbox-dafault
+            %label
+              %input{ :type=>"checkbox" } 販売中
+        .Selling__status--checkboxes
+          .checkbox-dafault
+            %label
+              %input{ :type=>"checkbox" } 売り切れ
+      .Search__Btn--Options
+        %button.clear クリア
+        %button.complete 完了
+        = link_to new_product_path do
+          .BuyBtn         
+            %span.BuyBtn__text 出品する
+            = image_tag asset_path("icon_camera.png"), size: "50x50"
+              
+    
+  .Search-result-container
+    .Search-result-head Champion スウェット グレー
+    .Search-result-number 1 - #{@products.length}件表示
+  
+    .Products-box-contents
+      - @products.each do |product|
+        .Products-box-product
+          .Product-box-image
+          - product.images.first(1).each do |image|
+            = image_tag asset_path("#{image.image}"), size: "160x160"
+            -if product.buyer_id.present?
+              .products-sold
+                .products-sold__inner
+                  SOLD
+          .Product-deatail-BottomBox
+            %h3.Product-name 
+            = link_to product.name, "/products/#{product.id}"
+       
+%aside.AppAdvertisement
+  .Inner
+    %h2.Inner__title だれでもかんたん、人生を変えるフリマアプリ
+    %p.inner__text 今すぐ無料ダウンロード!
+    .Inner__btn
+      .aBtn
+      = image_tag asset_path("applogo.png"), size: "180x53"
+      .gBtn
+      = image_tag asset_path("googlebtn.png"), size: "180x53"
+        
+
+.Footer
+  .contents
+    %ul.contents
+      %li.content
+        %h2.content__head FURIMAについて
+        %ul
+          %li.content= link_to '会社概要','/'
+          %li.content= link_to 'プライバシーポリシー','/'
+          %li.content= link_to 'FURIMA利用規約','/'
+          %li.content= link_to 'ポイントに関する特約','/'
+      %li.content
+        %h2.content__head FURIMAを見る
+        %ul
+          %li.content= link_to 'カテゴリー一覧','/'
+          %li.content= link_to 'ブランド一覧','/'   
+      %li.contect
+        %h2.content__head ヘルプ＆ガイド
+        %ul
+          %li.content= link_to 'FURIMAガイド','/'
+          %li.content= link_to 'FURIMAロゴ利用ガイドライン','/'
+          %li.content= link_to 'お知らせ','/'
+  .Footer_logo
+    = image_tag asset_path("logo-white.png"), size: "150x50"
+  %p.Clogo ©︎FURIMA

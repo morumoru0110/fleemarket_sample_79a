@@ -1,0 +1,12 @@
+= form_with url: comments_path, local: true do |f|
+  .main-contents__show-main__product__comment__new
+    = f.text_area :comment, class: "new"
+    = f.hidden_field :id, value: params[:id]
+  .main-contents__show-main__product__comment__precautions
+    %p 相手のことを考え丁寧なコメントを心がけましょう。
+    %P 不快な言葉遣いなどは利用制限や退会処分となることがあります。
+  -if user_signed_in?
+    .main-contents__show-main__product__comment__commentBtn
+      = button_tag type: 'submit', class: 'commentBtn' do
+        %i.far.fa-comment
+        コメントする

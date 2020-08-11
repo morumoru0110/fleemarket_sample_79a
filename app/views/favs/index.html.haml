@@ -1,0 +1,48 @@
+.main-header
+  =render partial: 'layouts/header'
+
+.favs-content
+%h2.head お気に入り一覧
+.ProductLists
+  - @favs.each do |fav|
+    .ProductList
+      .ProductList__img
+        - fav.images.first(1).each do |image|
+          = image_tag asset_path("#{image.image}"), class: 'image-category'
+            -if fav.buyer_id.present?
+            .products-sold
+              .products-sold__inner
+                SOLD
+      .ProductList__Body
+        %h3.name
+          = link_to fav.name, "/products/#{fav.id}"
+        %ul.PriceLike
+          %li.price
+          = "#{fav.price}円"
+          %li.star 0
+        %p.tax (税込)
+
+.Footer
+  .contents
+    %ul.contents
+      %li.content
+        %h2.content__head FURIMAについて
+        %ul
+          %li.content= link_to '会社概要','/'
+          %li.content= link_to 'プライバシーポリシー','/'
+          %li.content= link_to 'FURIMA利用規約','/'
+          %li.content= link_to 'ポイントに関する特約','/'
+      %li.content
+        %h2.content__head FURIMAを見る
+        %ul
+          %li.content= link_to 'カテゴリー一覧','/'
+          %li.content= link_to 'ブランド一覧','/'   
+      %li.contect
+        %h2.content__head ヘルプ＆ガイド
+        %ul
+          %li.content= link_to 'FURIMAガイド','/'
+          %li.content= link_to 'FURIMAロゴ利用ガイドライン','/'
+          %li.content= link_to 'お知らせ','/'
+  .Footer_logo
+    = image_tag asset_path("logo-white.png"), size: "150x50"
+  %p.Clogo ©︎FURIMA

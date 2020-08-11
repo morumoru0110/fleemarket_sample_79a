@@ -1,0 +1,10 @@
+-if user_signed_in?
+  -if current_user.fav_by?(@product)
+    =form_with url: fav_path, method: :delete, remote: true do |f|
+      =f.hidden_field :id, value: params[:id]
+      =f.submit 'お気に入り解除', class: "likeBtn"
+  -else
+    =form_with url: favs_path, method: :post, remote: true do |f|
+      =f.hidden_field :id, value: params[:id]
+      =f.submit '★お気に入り', class: "likeBtn"
+    

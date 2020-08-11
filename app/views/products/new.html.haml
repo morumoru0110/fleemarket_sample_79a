@@ -1,0 +1,207 @@
+.sell-container
+  =render partial: 'layouts/header'
+  .signup-container
+    = form_with model: @product, class: "form", id: "product-form" do |f|
+      .signup-top
+        %nav.bread_crumbs
+          %ol
+            %li 
+              - breadcrumb :products_new
+              = breadcrumbs separator: " &rsaquo; "
+        %h2.signup-header
+
+      .signup-body
+        .sell-upload-form
+          -# 画像アップロード
+          .sell-upload-form__image.sell-container-all-padding.container-border-top
+            %p.sell-title
+              = label :image, '出品画像',class: 'sell-upload-label'
+              %span.signup-form-container__span.span-need
+                必須
+            .upload-box
+              最大画像５枚までアップロードできます。
+              #image-box-1        
+                .item-num-0#image-box__container
+                  = f.fields_for :images do |image|
+                    .clearfix
+                      // 写真のプレビューとインプットボタンのul
+                      %ul#previews
+                        %li.input
+                          // 画像を取り込むインプットボタン
+                          %label.upload-label
+                            .upload-label__text
+                              クリックしてファイルをアップロード
+                              .input-area
+                                = image.file_field :image, class: "hidden image_upload"             
+            .input-error#product_image_error
+          -# 商品名、商品の説明
+          .signup-form-container.registration-form__first-container.sell-container-all-padding.container-border-top
+            .signup-form-container__title
+              %p.sell-title
+                = label :name, '商品名',class: 'signup-label sell-input'
+                %span.signup-form-container__span.span-need 必須
+            = f.text_field :name, placeholder: '商品名（必須40文字まで）', class: 'default-input sell-input'
+            .input-error#product_title_error
+          .signup-form-container.registration-form__first-container.sell-container-side-padding
+            .signup-form-container__title
+              %p.sell-title
+                = label :description, '商品の説明',class: 'signup-label'
+                %span.signup-form-container__span.span-need 必須
+            = f.text_area :description, placeholder: "商品の説明（必須1,000文字以内）（色、素材、重さ、定価、注意点など）例）　2010年頃に1万円で購入したジャケットです。ライトグレーで傷はありません。あわせやすいのでおすすめです。 ", class: 'default-input sell-input-area'
+            .input-error#product_text_error
+          -# 商品の明細
+          .sell-container-all-padding.container-border-top.flex
+            .sell-container-left
+              商品の詳細
+            .sell-container-right
+              .listing-product-detail__category
+                %p.sell-title
+                  = label :category, 'カテゴリー',class: 'signup-label'
+                  %span.signup-form-container__span.span-need 必須
+                .category_wrapper
+                  .select-wrap.category_index_wrapper
+                    = f.select :category, @category_parent_array, placeholder: '選択してください', class: 'default-input sell-input'
+                    //%i.select-arrow.fas.fa-chevron-down
+                  .input-error#product_category_index_id_error
+              .listing-brand-conditon
+                %p.margin-2rem.sell-title
+                  = label :brand, 'ブランド',class: 'signup-label'
+                  %span.signup-form-container__span.span-not-need 任意
+                .select-wrap
+                  = f.text_field :brand, placeholder: ' 例) シャネル', class: 'default-input sell-input'
+                  -# %i.select-arrow.fas.fa-chevron-down
+                .input-error#product_fresh_status_error
+                -# ここにbigcategory,smallcategoryを挿入する
+                %p.margin-2rem.sell-title
+                  = label :condition, '商品の状態',class: 'signup-label'
+                  %span.signup-form-container__span.span-need 必須
+                .select-wrap
+                  = f.select :condition, [["新品、未使用"],["未使用に近い"],["目立った傷や汚れなし"],["やや傷や汚れあり"],["傷や汚れあり"],["全体的に状態が悪い"]], {},class: 'default-input sell-input'
+                  -# %i.select-arrow.fas.fa-chevron-down
+                .input-error#product_fresh_status_error
+
+          -# 配送について
+          .sell-container-all-padding.container-border-top.flex
+            .sell-container-left
+              %p
+                配送について
+                = link_to "" do
+                  %i.fas.fa-question-circle.link-space-reset
+            .sell-container-right
+              %p.sell-title
+                = label :shipping_charge, '配送料の負担',class: 'signup-label'
+                %span.signup-form-container__span.span-need 必須
+              .select-wrap
+                = f.select :shipping_charge,[[1],[2]],  {}, class: 'default-input sell-input', placeholder: ' 例) 1 or 2    1.送料込,2.着払い  '
+              例) 1.送料込    2.着払い
+              .input-error#product_deliver_person_error
+              %p.margin-2rem.sell-title
+                = label :shipping_area, '発送元の地域',class: 'signup-label'
+                %span.signup-form-container__span.span-need 必須
+              .select-wrap
+                = f.select :shipping_area, Address.prefectures.keys, {}, {class: 'default-input sell-input'}
+                -# = f.text_field :shipping_area, placeholder: ' 例) 東京都', class: 'default-input sell-input'
+                -# %i.select-arrow.fas.fa-chevron-down
+              .input-error#product_from_area_error
+              %p.margin-2rem.sell-title
+                = label :shipping_day, '発送までの日数',class: 'signup-label'
+                %span.signup-form-container__span.span-need 必須
+              .select-wrap
+                = f.select :shipping_day,[[1],[2],[3],[4],[5],[6],[7]], placeholder: ' 例) ”1”から”7”で入力', class: 'default-input sell-input'
+                -# %i.select-arrow.fas.fa-chevron-down
+              .input-error#product_deliver_leadtime_error
+          -# 販売価格
+          .sell-container-all-padding.container-border-top.flex
+            .sell-container-left.link-space-reset
+              %p
+                販売価格
+                %span.link-space-reset (300~9,999,999)
+                = link_to "" do
+                  %i.fas.fa-question-circle
+            .sell-container-right
+              .sell-container-right__price-wrapper
+                %p.sell-title
+                  = label :price, '価格',class: 'signup-label' do
+                    価格
+                    %span.signup-form-container__span.span-need 必須
+                .sell-container-right__price-wrapper__input
+                  %p
+                    ¥
+                    = f.text_field :price, placeholder: "例：300", id:"product_price", class: 'default-input sell-input ', style:"text-align:right"
+              .input-error#product_price_error
+              .sell-container-right__price-fee
+                .sell-container-right__price-fee__text
+                  %p
+                    販売手数料(10%)
+                .sell-container-right__price-fee__price
+                  %p#price_fee
+                    ー
+              .sell-container-right__price-benefit
+                %h2
+                  販売利益
+                %h2#price_benefit
+                  ー
+          -# 説明、出品ボタン
+          .sell-container-all-padding.container-border-top
+          - if user_signed_in?
+            .sell-container-submit
+              = f.submit "出品する",class: 'submit-btn submit-btn-rightgreen user-mypage-wrapper__main__credit__content__btn sell-container-submit__btn'
+            .sell-container-back
+              = link_to root_path,class: 'submit-btn submit-btn-gray user-mypage-wrapper__main__credit__content__btn sell-container-back__btn' do
+                %span.back もどる
+            .sell-container-description
+              %span
+                = link_to "禁止されている出品", ""
+                、
+                = link_to "行為", ""
+                を必ずご確認ください。
+              %span
+                またブランド品でシリアルナンバー等がある場合はご記載ください。
+                = link_to "偽ブランドの販売", "" 
+                は犯罪であり処罰される可能性があります。
+              %span
+                また、出品をもちまして
+                = link_to "加盟店規約", ""
+                に同意したことになります。
+          - else
+            .sell-container-back
+              = link_to root_path,class: 'submit-btn submit-btn-gray user-mypage-wrapper__main__credit__content__btn sell-container-back__btn' do
+                %span.back もどる
+            .sell-container-description
+              %span
+                = link_to "禁止されている出品", ""
+                、
+                = link_to "行為", ""
+                を必ずご確認ください。
+              %span
+                またブランド品でシリアルナンバー等がある場合はご記載ください。
+                = link_to "偽ブランドの販売", "" 
+                は犯罪であり処罰される可能性があります。
+              %span
+                また、出品をもちまして
+                = link_to "加盟店規約", ""
+                に同意したことになります。
+.Footer
+  .contents
+    %ul.contents
+      %li.content
+        %h2.content__head FURIMAについて
+        %ul
+          %li.content= link_to '会社概要','/'
+          %li.content= link_to 'プライバシーポリシー','/'
+          %li.content= link_to 'FURIMA利用規約','/'
+          %li.content= link_to 'ポイントに関する特約','/'
+      %li.content
+        %h2.content__head FURIMAを見る
+        %ul
+          %li.content= link_to 'カテゴリー一覧','/'
+          %li.content= link_to 'ブランド一覧','/'   
+      %li.contect
+        %h2.content__head ヘルプ＆ガイド
+        %ul
+          %li.content= link_to 'FURIMAガイド','/'
+          %li.content= link_to 'FURIMAロゴ利用ガイドライン','/'
+          %li.content= link_to 'お知らせ','/'
+  .Footer_logo
+    = image_tag asset_path("logo-white.png"), size: "150x50"
+  %p.Clogo ©︎FURIMA

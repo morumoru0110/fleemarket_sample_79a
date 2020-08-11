@@ -1,0 +1,40 @@
+.comment-edit {
+  height: 80px;
+  width: 560px;
+  font-size: 14px;
+  margin: 0 auto;
+  line-height: 25px;
+  margin-bottom: 20px;
+}
+.comment-edit-text {
+  margin: 0 50px;
+  height: 100%;
+  width: 100%;
+  border: solid 1px rgb(46, 44, 44);
+  text-align: start;
+  overflow-wrap: break-word;
+  margin-left: 5px;
+}
+.comment-notice {
+  font-size: 14px;
+  line-height: 25px;
+  p {
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+  }
+}
+.comment-edit-Btn {
+  text-align: center;
+  line-height: 48px;
+  padding-top: 30px;
+}
+.commentBtn-tag {
+  height: 50px;
+  background: #3ccace;
+  border: 1px solid #3ccace;
+  color: white;
+  width: 60%;
+  font-size: 18px;
+  border-radius: 100px;
+}

@@ -1,0 +1,14 @@
+.contents
+  %header.main-header
+    = render "layouts/header"
+
+  = form_with model: @comment, local: true do |f|
+    .comment-edit
+      = f.text_area :comment, class: "comment-edit-text"
+    .comment-notice
+      %p 相手のことを考え丁寧なコメントを心がけましょう。
+      %P 不快な言葉遣いなどは利用制限や退会処分となることがあります。
+    .comment-edit-Btn
+      = button_tag type: 'submit', class: 'commentBtn-tag' do
+        %i.far.fa-comment
+        コメントする
